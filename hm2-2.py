@@ -54,8 +54,11 @@ class AddressBook(UserDict):
     def delete_record(self, name):
         del self.data[name]
 
-    def find_record(self, name):
+    def find(self, name):
         return self.data.get(name)
+
+    def delete(self, name):
+        self.delete_record(name)
 
     def __str__(self):
         return "\n".join(str(record) for record in self.data.values())
@@ -78,22 +81,18 @@ if __name__ == "__main__":
     book.add_record(jane_record)
 
     # Виведення всіх записів у книзі
-    print("All records in the address book:")
     for name, record in book.data.items():
         print(record)
 
     # Знаходження та редагування телефону для John
-    john = book.find_record("John")
+    john = book.find("John")
     john.edit_phone("1234567890", "1112223333")
 
-    print("\nAfter editing John's phone:")
-    print(john)
+    print(john)  # Виведення: Contact name: John, phones: 1112223333; 5555555555
 
     # Пошук конкретного телефону у записі John
     found_phone = john.find_phone("5555555555")
-    print(f"{john.name.value}: {found_phone}")
+    print(f"{john.name}: {found_phone}")  # Виведення: 5555555555
 
     # Видалення запису Jane
-    book.delete_record("Jane")
-    print("\nAfter deleting Jane's record:")
-    print(book)
+    book.delete("Jane")
